@@ -28,11 +28,21 @@
 
       </div>
 
+      <div class="error">
+        <p v-if="errors.length">
+        <b>Пожалуйста исправьте указанные ошибки:</b>
+        <ul>
+          <li v-for="error in errors"
+          :key="error.id">{{ error }}</li>
+        </ul>
+        </p>
+      </div>
+
     </div>
 
     <div class="products-container flex-col-md-9">
       <div class="filters">
-        <select class="filter">
+        <select  @click="sorting" class="filter">
           <option>по возрастанию цен</option>
           <option>по убыванию цен</option>
           <option>по наименованию</option>
@@ -69,7 +79,7 @@ export default {
   },
   data() {
     return {
-      products: [
+      products: this.products = JSON.parse(localStorage.getItem("products")) || [
         {
           id: "1",
           name: "Кружка",
@@ -84,6 +94,14 @@ export default {
           img: "https://st.depositphotos.com/1003369/3697/i/450/depositphotos_36975627-stock-photo-mountain-bicycle-bike-on-white.jpg",
           text: "Довольно-таки интересное описание товара в несколько строк",
           price: "15 000",
+          basket: false
+        },
+        {
+          id: "3",
+          name: "Скейт",
+          img: "https://st.depositphotos.com/1063346/1341/i/600/depositphotos_13416201-stock-photo-black-skate-board-on-a.jpg",
+          text: "Довольно-таки новый, очень новый.",
+          price: "500",
           basket: false
         }
       ],
@@ -131,8 +149,21 @@ export default {
     },
     removeProduct: function (product) {
       this.products.splice(this.products.indexOf(product), 1);
+    },
+    sorting: function () {
+      alert ("Скоро эта функция заработает =)");
     }
 
+    
+
+  },
+  mounted() { 
+    this.products = JSON.parse(localStorage.getItem("products")) || [];
+  },
+  watch: {
+    products(products) {
+      localStorage.setItem("products", JSON.stringify(products));
+    }
   }
 }
 </script>
@@ -452,10 +483,10 @@ overflow: hidden;
 .product-remove {
   opacity: 0;
   position: absolute;
-  left: 215px;
+  left: 92%;
 
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
   border: 1px solid #000;
 
@@ -468,6 +499,16 @@ overflow: hidden;
 .product:hover .product-remove {
 	transform: translateY(0);
 	opacity: 1;
+}
+
+p.required:after
+{
+  color: red;
+  content: " *";
+}
+
+.error {
+color: #fc2d2d;
 }
 
 
