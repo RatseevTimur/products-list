@@ -109,8 +109,7 @@ export default {
       errors: [],
       name: null,
       img: null,
-      price: null,
-      addButtonActive: false
+      price: null
     }
   },
   methods: {
@@ -163,6 +162,11 @@ export default {
   watch: {
     products(products) {
       localStorage.setItem("products", JSON.stringify(products));
+    }
+  },
+  computed: {
+    addButtonActive: function() {
+      return ( this.name && this.img && this.price)
     }
   }
 }
