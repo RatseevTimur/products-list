@@ -59,7 +59,7 @@
             <button class="product-remove" @click="removeProduct(product)"></button>
           </div>
           <b class="h-description"> {{ product.name }} </b>
-          <p class="description"> {{ product.text }} </p>
+          <textarea class="description" v-model="product.text" disabled/> 
           <b class="price"> {{ product.price }} ₽ </b>
 
           </div>
@@ -79,7 +79,7 @@ export default {
   },
   data() {
     return {
-      products: this.products = JSON.parse(localStorage.getItem("products")) || [
+      products: [
         {
           id: "1",
           name: "Кружка",
@@ -90,7 +90,7 @@ export default {
         },
         {
           id: "2",
-          name: "Велик",
+          name: "Dtkjcbgtl",
           img: "https://st.depositphotos.com/1003369/3697/i/450/depositphotos_36975627-stock-photo-mountain-bicycle-bike-on-white.jpg",
           text: "Довольно-таки интересное описание товара в несколько строк",
           price: "15 000",
@@ -124,7 +124,7 @@ export default {
           id: this.createNewId(),
           name: this.name,
           img: this.img,
-          text: this.products.text,
+          text: this.products.text || "https://w7.pngwing.com/pngs/509/1020/png-transparent-drawing-graphic-design-mountain-atmosphere-landscape-computer-wallpaper-thumbnail.png",
           price: this.price,
           basket: false
         });
@@ -214,6 +214,7 @@ export default {
         background: #FFFEFB;
         box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02);
         border-radius: 4px;
+        
       }
     }
   }
@@ -466,22 +467,24 @@ color: #3F3F3F;
 position: relative;
 float: left;
 margin: 0;
-font-size: 1em;
-line-height: 1.4em;
-height: 5.6em;
-overflow: hidden;
-padding-top: 16px;
+top: 30px;
+
+
+resize: none;
+width: 90%;
+height: 100px;
+background: white;
+border: none;
 }
 
 .price {
-position: relative;
+position: absolute;
 float: left;
 left: 15px;
-margin: 0;
+top: 385px;
+
 font-size: 1em;
-line-height: 8em;
-height: 5.6em;
-overflow: hidden;
+
 }
 
 .product-remove {
@@ -498,6 +501,7 @@ overflow: hidden;
   background-position: left center;
   background-repeat: no-repeat;
   background-size: 100%;
+  
 }
 
 .product:hover .product-remove {
