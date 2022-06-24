@@ -90,7 +90,7 @@ export default {
         },
         {
           id: "2",
-          name: "Dtkjcbgtl",
+          name: "Велосипед",
           img: "https://st.depositphotos.com/1003369/3697/i/450/depositphotos_36975627-stock-photo-mountain-bicycle-bike-on-white.jpg",
           text: "Довольно-таки интересное описание товара в несколько строк",
           price: "15 000",
@@ -157,7 +157,7 @@ export default {
 
   },
   mounted() { 
-    this.products = JSON.parse(localStorage.getItem("products")) || [];
+    this.products = JSON.parse(localStorage.getItem("products")) || this.products;
   },
   watch: {
     products(products) {
@@ -465,13 +465,13 @@ color: #3F3F3F;
 
 .description {
 position: relative;
-float: left;
-margin: 0;
+
+
 top: 30px;
 
 
 resize: none;
-width: 90%;
+width: 85%;
 height: 100px;
 background: white;
 border: none;
