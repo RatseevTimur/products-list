@@ -41,8 +41,10 @@
     </div>
 
     <div class="products-container flex-col-md-9">
+
       <div class="filters">
-        <select  @click="sorting" class="filter">
+        <select v-model="selectedProducts" class="filter">
+          <option>по порядку</option>
           <option>по возрастанию цен</option>
           <option>по убыванию цен</option>
           <option>по наименованию</option>
@@ -51,7 +53,7 @@
 
       <div class="products-grid">
         
-        <div v-for="product in products"
+        <div v-for="product in sorting()"
         :key="product.id" class="product-container">
           <div class="product">
             <div class="product-photo">
@@ -85,7 +87,7 @@ export default {
           name: "Кружка",
           img: "https://avatars.mds.yandex.net/get-mpic/5266697/img_id1186982211701183156.png/orig",
           text: "Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в несколько строк",
-          price: "5 000",
+          price: 5000,
           basket: false
         },
         {
@@ -93,7 +95,7 @@ export default {
           name: "Велосипед",
           img: "https://st.depositphotos.com/1003369/3697/i/450/depositphotos_36975627-stock-photo-mountain-bicycle-bike-on-white.jpg",
           text: "Довольно-таки интересное описание товара в несколько строк",
-          price: "15 000",
+          price: 15000,
           basket: false
         },
         {
@@ -101,7 +103,7 @@ export default {
           name: "Скейт",
           img: "https://st.depositphotos.com/1063346/1341/i/600/depositphotos_13416201-stock-photo-black-skate-board-on-a.jpg",
           text: "Довольно-таки новый, очень новый.",
-          price: "500",
+          price: 500,
           basket: false
         }
       ],
@@ -109,7 +111,8 @@ export default {
       errors: [],
       name: null,
       img: null,
-      price: null
+      price: null,
+      selectedProducts: "по порядку"
     }
   },
   methods: {
@@ -124,7 +127,7 @@ export default {
           id: this.createNewId(),
           name: this.name,
           img: this.img,
-          text: this.products.text || "https://w7.pngwing.com/pngs/509/1020/png-transparent-drawing-graphic-design-mountain-atmosphere-landscape-computer-wallpaper-thumbnail.png",
+          text: this.products.text,
           price: this.price,
           basket: false
         });
@@ -150,11 +153,22 @@ export default {
       this.products.splice(this.products.indexOf(product), 1);
     },
     sorting: function () {
-      alert ("Скоро эта функция заработает =)");
+      const sortByName = function (d1, d2) {return (d1.name.toLowerCase() > d2.name.toLowerCase()) ? 1 : -1;};
+      const sortById = function (d1, d2) { return (d1.id > d2.id) ? 1 : -1; };
+      const sortByPrice = function (d1, d2) { return (d1.price > d2.price) ? 1 : -1; };
+      const sortByPriceReverse = function (d1, d2) { return (d1.price < d2.price) ? 1 : -1; };
+
+      if(this.selectedProducts === "по возрастанию цен"){
+        return (this.products.slice().sort(sortByPrice))
+      }
+      if(this.selectedProducts === "по убыванию цен"){
+       return (this.products.slice().sort(sortByPriceReverse))
+      }
+      if(this.selectedProducts === "по наименованию"){
+        return (this.products.slice().sort(sortByName))
+      }
+      else{return(this.products.slice().sort(sortById))}
     }
-
-    
-
   },
   mounted() { 
     this.products = JSON.parse(localStorage.getItem("products")) || this.products;
@@ -465,10 +479,7 @@ color: #3F3F3F;
 
 .description {
 position: relative;
-
-
 top: 30px;
-
 
 resize: none;
 width: 85%;
