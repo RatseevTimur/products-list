@@ -159,15 +159,15 @@ export default {
       const sortByPriceReverse = function (d1, d2) { return (d1.price < d2.price) ? 1 : -1; };
 
       if(this.selectedProducts === "по возрастанию цен"){
-        return (this.products.sort(sortByPrice))
+        return (this.products.slice().sort(sortByPrice))
       }
       if(this.selectedProducts === "по убыванию цен"){
-       return (this.products.sort(sortByPriceReverse))
+       return (this.products.slice().sort(sortByPriceReverse))
       }
       if(this.selectedProducts === "по наименованию"){
-        return (this.products.sort(sortByName))
+        return (this.products.slice().sort(sortByName))
       }
-      else{return(this.products.sort(sortById))}
+      else{return(this.products.slice().sort(sortById))}
     }
   },
   mounted() { 
