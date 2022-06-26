@@ -482,7 +482,7 @@ position: relative;
 top: 30px;
 
 resize: none;
-width: 90%;
+width: 85%;
 height: 100px;
 background: white;
 border: none;
